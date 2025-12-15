@@ -31,15 +31,5 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and Push Docker image
-        run: |
-          set -e
-
-          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/my-image-name"
-          IMAGE_TAG="latest"
-
-          echo "🚀 Building image: $IMAGE_NAME:$IMAGE_TAG"
-
-          docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
-          docker push "$IMAGE_NAME:$IMAGE_TAG"
+ 
 
