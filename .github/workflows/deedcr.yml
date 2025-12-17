@@ -24,7 +24,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        
+
       # 3️⃣ Set up Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -49,6 +49,14 @@ jobs:
             sandip2025/myapp:v1.0.0
             sandip2025/myapp:staging
 
+      # 6️⃣ Security Scan with Snyk
+      - name: Snyk Scan
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: sandip2025/myapp:latest
+          args: monitor  # use `test` instead of `monitor` to fail the workflow on vulnerabilities
 
 
 
