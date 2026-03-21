@@ -45,3 +45,13 @@ jobs:
         run: |
           docker push "${{ secrets.DOCKER_USERNAME }}/my-image:latest"
           docker push "${{ secrets.DOCKER_USERNAME }}/my-image:${{ github.sha }}"
+
+              # 7. Run Docker container with port mapping
+      - name: Run Docker container
+        run: |
+          docker stop my-container || true
+          docker rm my-container || true
+          docker run -d \
+            --name my-container \
+            -p 3000:3000 \
+            "${{ secrets.DOCKER_USERNAME }}/my-image:${{ github.sha }}"
