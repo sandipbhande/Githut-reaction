@@ -26,9 +26,17 @@ jobs:
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/my-image:latest .
 
       # 4. Push Docker image to Docker Hub
-      - name: Push Docker image2
+      - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/my-image:latest
 
+      # 5. Run the container with Node.js app (detached & port mapping)
+      - name: Run Docker container
+        run: |
+          docker stop nodejs-container || true
+          docker rm nodejs-container || true
+          docker run -d --name nodejs-container -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/my-image:latest
+
+      
     
 
 
